@@ -1,0 +1,151 @@
+{
+  "projectName": "Budds Plumbing & HVAC Website",
+  "clientName": "Budd's Plumbing, Heating, and HVAC",
+  "projectType": "local-service-business",
+  "framework": "Astro",
+
+  "businessInfo": {
+    "established": "1989",
+    "phone": "(609) 465-3759",
+    "email": "info@buddsplumbing.com",
+    "website": "https://www.buddsplumbing.com",
+    "licenseNumber": "Master Plumber License",
+    "yearsExperience": 35
+  },
+
+  "serviceAreas": {
+    "primary": "Cape May County, NJ",
+    "counties": ["Cape May County", "Atlantic County", "Cumberland County"],
+    "cities": [
+      "Ocean City",
+      "Wildwood",
+      "Stone Harbor",
+      "Avalon",
+      "Cape May",
+      "Cape May Court House",
+      "Sea Isle City",
+      "North Wildwood",
+      "Atlantic City",
+      "Egg Harbor Township",
+      "Vineland",
+      "Millville"
+    ]
+  },
+
+  "services": {
+    "emergency": [
+      "24/7 Emergency Plumbing",
+      "Burst Pipe Repair",
+      "Gas Leak Detection",
+      "Sewer Backup",
+      "Water Heater Failures"
+    ],
+    "plumbing": [
+      "Drain Cleaning",
+      "Tankless Water Heaters",
+      "Bathroom Renovation",
+      "Toilet Repair & Replacement",
+      "Gas Line Services",
+      "Piping & Repiping"
+    ],
+    "hvac": [
+      "Air Conditioning",
+      "Heating Systems",
+      "Furnaces",
+      "Boilers"
+    ]
+  },
+
+  "targetMarkets": {
+    "capeMayCounty": {
+      "focus": "Tourism & vacation properties",
+      "characteristics": "Coastal, seasonal, high tourism volume",
+      "premiumMarkets": ["Stone Harbor", "Avalon"],
+      "keywords": ["shore plumbing", "beach property", "vacation rental maintenance"]
+    },
+    "atlanticCounty": {
+      "focus": "Commercial & high-volume residential",
+      "characteristics": "Casino/hotel market, suburban residential",
+      "keywords": ["commercial plumbing", "hotel maintenance", "residential service"]
+    },
+    "cumberlandCounty": {
+      "focus": "Stable year-round residential & agricultural",
+      "characteristics": "Working-class residential, agricultural properties",
+      "keywords": ["residential plumbing", "well pump services", "affordable service"]
+    }
+  },
+
+  "brandColors": {
+    "primary": "#0066CC",
+    "secondary": "#FF6B00",
+    "accent": "#00A859",
+    "neutral": "#333333"
+  },
+
+  "seoStrategy": {
+    "primaryKeywords": [
+      "emergency plumber [location]",
+      "plumber Cape May County",
+      "24/7 plumbing [location]",
+      "tankless water heater installation",
+      "drain cleaning [location]"
+    ],
+    "seasonalContent": [
+      "Winterization services (Nov-Mar)",
+      "Spring startup services (Apr-May)",
+      "Summer emergency response (Jun-Aug)",
+      "Pre-winter inspections (Sep-Oct)"
+    ]
+  },
+
+  "llmOptimization": {
+    "enabled": true,
+    "targetPlatforms": ["Google AI Overview", "ChatGPT", "Claude", "Perplexity"],
+    "faqMinimum": 5,
+    "pricingTransparency": true,
+    "authoritySignals": [
+      "Licensed Master Plumbers",
+      "35+ years experience",
+      "2,500+ satisfied customers",
+      "Specific response times",
+      "Coastal expertise"
+    ]
+  },
+
+  "tracking": {
+    "analytics": {
+      "ga4": "PUBLIC_GA4_ID",
+      "googleAds": "PUBLIC_GADS_ID"
+    },
+    "callTracking": {
+      "provider": "CallRail",
+      "companyId": "CALLRAIL_COMPANY_ID"
+    },
+    "database": {
+      "provider": "Supabase",
+      "url": "SUPABASE_URL"
+    },
+    "notifications": {
+      "slack": "SLACK_WEBHOOK_URL"
+    }
+  },
+
+  "contentStatus": {
+    "phase1Complete": "Emergency service pages (7 pages)",
+    "phase2Complete": "Premium market services (4 pages: bathroom-renovation-stone-harbor, water-heater-installation-avalon, drain-cleaning-ocean-city, tankless-water-heater-stone-harbor)",
+    "phase3Complete": "Core service location variants (6 pages: plumbing-repair-ocean-city, leak-detection-wildwood, sewer-line-repair-cape-may, pipe-repair-ocean-city, plumbing-inspection-avalon, water-line-repair-stone-harbor)",
+    "phase4Pending": "HVAC service pages"
+  },
+
+  "performanceTargets": {
+    "lcp": "< 2.5s",
+    "cls": "< 0.1",
+    "lighthouse": ">= 90"
+  },
+
+  "agentReferences": {
+    "note": "All agents referenced from ~/ai-digital-agency/agents/",
+    "sharedAgents": true,
+    "noLocalAgents": true
+  }
+}

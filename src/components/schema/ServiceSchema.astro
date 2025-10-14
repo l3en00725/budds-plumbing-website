@@ -1,0 +1,79 @@
+---
+export interface Props {
+	serviceName: string;
+	description: string;
+	category?: string;
+	serviceType?: string;
+	priceRange?: string;
+	availableChannel?: string[];
+}
+
+const {
+	serviceName,
+	description,
+	category = "Plumbing & HVAC Services",
+	serviceType = "Professional Service",
+	priceRange = "$$",
+	availableChannel = ["Telephone", "Email", "Website"]
+} = Astro.props;
+
+const schemaData = {
+	"@context": "https://schema.org",
+	"@type": "Service",
+	"name": serviceName,
+	"description": description,
+	"category": category,
+	"serviceType": serviceType,
+	"provider": {
+		"@type": "LocalBusiness",
+		"@id": "https://www.buddsplumbing.com/#business",
+		"name": "Budd's Plumbing, Heating & Cooling",
+		"telephone": "(609) 465-3759",
+		"url": "https://www.buddsplumbing.com",
+		"address": {
+			"@type": "PostalAddress",
+			"streetAddress": "1011 Route 9 S",
+			"addressLocality": "Cape May Court House",
+			"addressRegion": "NJ",
+			"postalCode": "08210",
+			"addressCountry": "US"
+		}
+	},
+	"areaServed": [
+		{
+			"@type": "City",
+			"name": "Cape May Court House, NJ"
+		},
+		{
+			"@type": "City",
+			"name": "Wildwood, NJ"
+		},
+		{
+			"@type": "City",
+			"name": "Ocean City, NJ"
+		},
+		{
+			"@type": "State",
+			"name": "Cape May County, NJ"
+		}
+	],
+	"availableChannel": availableChannel.map(channel => ({
+		"@type": "ServiceChannel",
+		"serviceType": channel
+	})),
+	"offers": {
+		"@type": "Offer",
+		"description": `Professional ${serviceName} in Cape May County`,
+		"priceRange": priceRange,
+		"availability": "https://schema.org/InStock"
+	},
+	"hoursAvailable": {
+		"@type": "OpeningHoursSpecification",
+		"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+		"opens": "00:00",
+		"closes": "23:59"
+	}
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />

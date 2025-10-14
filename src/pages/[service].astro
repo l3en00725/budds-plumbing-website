@@ -1,0 +1,401 @@
+---
+import { Container } from '@components/odyssey-theme';
+import Layout from '../layouts/Page.astro';
+import SJGFinancingCTA from '../components/sections/SJGFinancingCTA.astro';
+import ACElectricFinancingCTA from '../components/sections/ACElectricFinancingCTA.astro';
+import settings from '../config/settings';
+
+export async function getStaticPaths() {
+  // Get all root-level service pages (not location-specific)
+  const allContentPages = await Astro.glob('../content/*.md');
+
+  // Filter for service pages only (exclude home, about, contact, etc.)
+  const servicePages = allContentPages.filter(page => {
+    const slug = page.frontmatter.slug;
+    // Include only service-related pages
+    const serviceKeywords = [
+      'furnace', 'heating', 'heater', 'boiler',
+      'water-heater', 'sewer-line', 'sump-pump',
+      'general-plumbing', 'membership', 'drain-cleaning',
+      'tankless-water-heater'
+    ];
+    return slug && serviceKeywords.some(keyword => slug.includes(keyword));
+  });
+
+  return servicePages.map((page) => {
+    const { frontmatter, compiledContent } = page;
+    return {
+      params: { service: frontmatter.slug },
+      props: {
+        frontmatter,
+        content: compiledContent(),
+      },
+    };
+  });
+}
+
+const { frontmatter, content } = Astro.props;
+const { title, description, slug, heroImage, heroAlt } = frontmatter;
+
+// Determine which financing to show based on service type
+// SJG Financing: furnaces, boilers, water heaters (gas equipment)
+// AC Electric Financing: HVAC, AC, heat pumps (electric cooling)
+const sjgServices = ['furnace', 'boiler', 'water-heater', 'heater'];
+const acElectricServices = ['hvac', 'air-conditioning', 'ac', 'heat-pump', 'cooling'];
+
+const showSJGFinancing = sjgServices.some(keyword => slug.includes(keyword));
+const showACElectricFinancing = acElectricServices.some(keyword => slug.includes(keyword));
+
+// Determine service name for dynamic content
+let serviceName = 'heating system';
+if (slug.includes('furnace')) serviceName = 'furnace';
+else if (slug.includes('boiler')) serviceName = 'boiler';
+else if (slug.includes('water-heater')) serviceName = 'water heater';
+else if (slug.includes('hvac') || slug.includes('ac')) serviceName = 'HVAC system';
+else if (slug.includes('heat-pump')) serviceName = 'heat pump';
+
+// Build canonical URL
+const canonicalURL = new URL(`/${slug}`, settings.url);
+
+// Extract FAQ data from content for schema
+const faqMatches = content.match(/\*\*Q:([^*]+)\*\*\s*A:([^*\n]+)/g) || [];
+const faqSchema = faqMatches.slice(0, 8).map((faq) => {
+  const [question, answer] = faq.split('**A:');
+  return {
+    "@type": "Question",
+    "name": question.replace('**Q:', '').trim(),
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": answer.trim()
+    }
+  };
+});
+
+// Service Schema
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": title,
+  "description": description,
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": settings.name,
+    "telephone": "(609) 465-3759",
+    "email": "info@buddsplumbing.com",
+    "url": settings.url,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1011 Route 9 South",
+      "addressLocality": "Cape May Court House",
+      "addressRegion": "NJ",
+      "postalCode": "08210",
+      "addressCountry": "US"
+    },
+    "priceRange": "$$",
+    "image": heroImage ? new URL(heroImage, settings.url).toString() : undefined
+  },
+  "areaServed": {
+    "@type": "ServiceArea",
+    "name": "Cape May County, Atlantic County, Cumberland County, New Jersey"
+  },
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": canonicalURL.toString(),
+    "servicePhone": {
+      "@type": "ContactPoint",
+      "telephone": "+1-609-465-3759",
+      "contactType": "customer service",
+      "areaServed": "US",
+      "availableLanguage": "English"
+    }
+  }
+};
+
+// FAQ Schema (if FAQs exist)
+const faqPageSchema = faqSchema.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqSchema
+} : null;
+
+// Breadcrumb Schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": settings.url
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": title,
+      "item": canonicalURL.toString()
+    }
+  ]
+};
+
+// SEO configuration
+const seo = {
+  title,
+  description,
+  canonicalURL: canonicalURL.toString(),
+  image: heroImage ? new URL(heroImage, settings.url).toString() : undefined,
+};
+---
+
+<Layout seo={seo}>
+  <!-- Service Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+
+  <!-- FAQ Schema (if applicable) -->
+  {faqPageSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />
+  )}
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <!-- Hero Section -->
+  {heroImage && (
+    <div class="service-hero">
+      <img src={heroImage} alt={heroAlt || title} class="service-hero__image" />
+    </div>
+  )}
+
+  <!-- Breadcrumb Navigation -->
+  <Container>
+    <nav aria-label="Breadcrumb" class="breadcrumb">
+      <ol class="breadcrumb__list">
+        <li class="breadcrumb__item">
+          <a href="/" class="breadcrumb__link">Home</a>
+        </li>
+        <li class="breadcrumb__item breadcrumb__item--active" aria-current="page">
+          {title}
+        </li>
+      </ol>
+    </nav>
+  </Container>
+
+  <!-- Service Content -->
+  <Container narrow>
+    <article class="service-content">
+      <Fragment set:html={content} />
+    </article>
+  </Container>
+
+  <!-- SJG Financing CTA (for gas heating/water heater services) -->
+  {showSJGFinancing && (
+    <SJGFinancingCTA serviceName={serviceName} />
+  )}
+
+  <!-- Atlantic City Electric Financing CTA (for HVAC/AC services) -->
+  {showACElectricFinancing && (
+    <ACElectricFinancingCTA serviceName={serviceName} />
+  )}
+
+  <!-- CTA Section -->
+  <Container narrow>
+    <div class="service-cta">
+      <h2>Ready to Get Started?</h2>
+      <p>Contact Budd's Plumbing, Heating & Cooling for professional service you can trust.</p>
+      <div class="service-cta__actions">
+        <a href="tel:+16094653759" class="button button--primary">
+          Call (609) 465-3759
+        </a>
+        <a href="/company/contact" class="button button--secondary">
+          Contact Us Online
+        </a>
+      </div>
+    </div>
+  </Container>
+</Layout>
+
+<style>
+  /* Hero Section */
+  .service-hero {
+    width: 100%;
+    max-height: 400px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .service-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--theme-shape-radius);
+  }
+
+  /* Breadcrumb Navigation */
+  .breadcrumb {
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+  }
+
+  .breadcrumb__list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 0.5rem;
+    font-size: var(--font-size-sm);
+  }
+
+  .breadcrumb__item {
+    display: flex;
+    align-items: center;
+  }
+
+  .breadcrumb__item:not(:last-child)::after {
+    content: '›';
+    margin-left: 0.5rem;
+    color: var(--theme-text-secondary);
+  }
+
+  .breadcrumb__link {
+    color: var(--theme-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumb__link:hover {
+    color: var(--theme-primary-hover);
+    text-decoration: underline;
+  }
+
+  .breadcrumb__item--active {
+    color: var(--theme-text-secondary);
+  }
+
+  /* Service Content */
+  .service-content {
+    padding: 2rem 0;
+  }
+
+  .service-content :global(h1) {
+    margin-bottom: 1.5rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.2;
+  }
+
+  .service-content :global(h2) {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  .service-content :global(h3) {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+  }
+
+  .service-content :global(p) {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .service-content :global(ul),
+  .service-content :global(ol) {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+  }
+
+  .service-content :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .service-content :global(strong) {
+    font-weight: 600;
+    color: var(--theme-text-primary);
+  }
+
+  .service-content :global(blockquote) {
+    border-left: 4px solid var(--theme-primary);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--theme-text-secondary);
+  }
+
+  /* CTA Section */
+  .service-cta {
+    background: var(--theme-surface-2);
+    border-radius: var(--theme-shape-radius);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin: 4rem 0 3rem;
+  }
+
+  .service-cta h2 {
+    margin-bottom: 1rem;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  .service-cta p {
+    margin-bottom: 2rem;
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+  }
+
+  .service-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    border-radius: var(--theme-shape-radius);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .button--primary {
+    background: var(--theme-primary);
+    color: white;
+  }
+
+  .button--primary:hover {
+    background: var(--theme-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .button--secondary {
+    background: var(--theme-surface-1);
+    color: var(--theme-text-primary);
+    border: 2px solid var(--theme-border);
+  }
+
+  .button--secondary:hover {
+    background: var(--theme-surface-2);
+    border-color: var(--theme-primary);
+    transform: translateY(-2px);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .service-cta {
+      padding: 2rem 1rem;
+    }
+
+    .service-cta__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+</style>

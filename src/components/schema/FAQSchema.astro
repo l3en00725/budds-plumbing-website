@@ -1,0 +1,54 @@
+---
+export interface FAQ {
+	question: string;
+	answer: string;
+}
+
+export interface Props {
+	faqs?: FAQ[];
+}
+
+const {
+	faqs = [
+		{
+			question: "What areas do you serve?",
+			answer: "We serve Cape May County including Cape May Court House, Wildwood, Ocean City, and surrounding areas within a 25-mile radius."
+		},
+		{
+			question: "Do you offer 24/7 emergency services?",
+			answer: "Yes, we provide 24/7 emergency plumbing and HVAC services. Call (609) 465-3759 for immediate assistance."
+		},
+		{
+			question: "Are you licensed and insured?",
+			answer: "Yes, we are fully licensed and insured for your protection. All our technicians are certified professionals."
+		},
+		{
+			question: "Do you provide free estimates?",
+			answer: "Yes, we provide free estimates for most plumbing and HVAC installations and major repairs."
+		},
+		{
+			question: "What types of water heaters do you install?",
+			answer: "We install and service all types of water heaters including traditional tank water heaters, tankless water heaters, and hybrid heat pump water heaters."
+		},
+		{
+			question: "How quickly can you respond to emergency calls?",
+			answer: "We typically respond to emergency calls within 1-2 hours in Cape May County, depending on your location and current demand."
+		}
+	]
+} = Astro.props;
+
+const schemaData = {
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	"mainEntity": faqs.map(faq => ({
+		"@type": "Question",
+		"name": faq.question,
+		"acceptedAnswer": {
+			"@type": "Answer",
+			"text": faq.answer
+		}
+	}))
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />

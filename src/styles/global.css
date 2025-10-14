@@ -1,0 +1,44 @@
+html,
+body {
+	height: 100%;
+}
+
+body {
+	max-width: 1920px;
+	margin: 0 auto;
+	background-color: var(--theme-bg);
+	position: relative;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Positivus-inspired typography with Space Grotesk */
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--theme-font-family-heading);
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	line-height: 1.1;
+}
+
+h1 {
+	font-size: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+h2 {
+	font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+h3 {
+	font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+}
+
+pre {
+  padding: 1em;
+  border-radius: 0.5em;
+  overflow: auto;
+}
+
+pre .language-id {
+  display: none;
+}

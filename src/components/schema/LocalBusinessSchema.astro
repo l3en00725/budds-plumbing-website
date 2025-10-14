@@ -1,0 +1,125 @@
+---
+export interface Props {
+	name?: string;
+	telephone?: string;
+	address?: {
+		streetAddress: string;
+		addressLocality: string;
+		addressRegion: string;
+		postalCode: string;
+		addressCountry: string;
+	};
+	geo?: {
+		latitude: string;
+		longitude: string;
+	};
+	serviceAreas?: string[];
+	services?: string[];
+	description?: string;
+	priceRange?: string;
+	openingHours?: Array<{
+		dayOfWeek: string[];
+		opens: string;
+		closes: string;
+	}>;
+}
+
+const {
+	name = "Budd's Plumbing, Heating & Cooling",
+	telephone = "(609) 465-3759",
+	address = {
+		streetAddress: "1011 Route 9 S",
+		addressLocality: "Cape May Court House",
+		addressRegion: "NJ",
+		postalCode: "08210",
+		addressCountry: "US"
+	},
+	geo = {
+		latitude: "39.0867",
+		longitude: "-74.8262"
+	},
+	serviceAreas = [
+		"Cape May Court House, NJ",
+		"Wildwood, NJ",
+		"Ocean City, NJ",
+		"Cape May County, NJ"
+	],
+	services = [
+		"Emergency Plumbing",
+		"Water Heater Installation",
+		"HVAC Services",
+		"Drain Cleaning",
+		"Furnace Repair",
+		"Air Conditioning Installation"
+	],
+	description = "Professional plumbing, heating, and HVAC services in Cape May County. Emergency repairs, installations, and maintenance you can trust.",
+	priceRange = "$$",
+	openingHours = [
+		{
+			dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+			opens: "07:00",
+			closes: "17:00"
+		},
+		{
+			dayOfWeek: ["Saturday"],
+			opens: "08:00",
+			closes: "16:00"
+		}
+	]
+} = Astro.props;
+
+const schemaData = {
+	"@context": "https://schema.org",
+	"@type": "LocalBusiness",
+	"@id": "https://www.buddsplumbing.com/#business",
+	"name": name,
+	"image": "https://www.buddsplumbing.com/logo.jpg",
+	"telephone": telephone,
+	"email": "info@buddsplumbing.com",
+	"url": "https://www.buddsplumbing.com",
+	"description": description,
+	"priceRange": priceRange,
+	"address": {
+		"@type": "PostalAddress",
+		"streetAddress": address.streetAddress,
+		"addressLocality": address.addressLocality,
+		"addressRegion": address.addressRegion,
+		"postalCode": address.postalCode,
+		"addressCountry": address.addressCountry
+	},
+	"geo": {
+		"@type": "GeoCoordinates",
+		"latitude": geo.latitude,
+		"longitude": geo.longitude
+	},
+	"areaServed": serviceAreas.map(area => ({
+		"@type": "City",
+		"name": area
+	})),
+	"hasOfferCatalog": {
+		"@type": "OfferCatalog",
+		"name": "Plumbing and HVAC Services",
+		"itemListElement": services.map(service => ({
+			"@type": "Offer",
+			"itemOffered": {
+				"@type": "Service",
+				"name": service
+			}
+		}))
+	},
+	"openingHoursSpecification": openingHours.map(hours => ({
+		"@type": "OpeningHoursSpecification",
+		"dayOfWeek": hours.dayOfWeek,
+		"opens": hours.opens,
+		"closes": hours.closes
+	})),
+	"contactPoint": {
+		"@type": "ContactPoint",
+		"telephone": telephone,
+		"contactType": "customer service",
+		"availableLanguage": "English"
+	}
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
