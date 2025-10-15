@@ -132,71 +132,215 @@ This is the exact design system we're following. The template has been adapted f
 ### Our Development Framework
 We've built a sophisticated multi-agent AI system to assist with web development projects. This architecture is available to you for any support needed during development.
 
-**Repository:** https://github.com/l3en00725/ai-marketing-agency (Private)
+**Repository:** https://github.com/l3en00725/ai-marketing-agency (Private - request access if needed)
+
+**Architecture Overview:**
+The AI Digital Agency platform is a comprehensive multi-agent system designed to automate digital agency tasks including marketing campaigns, web development, and conversion optimization. The agents coordinate together to handle complex development workflows.
 
 ### Available AI Agents
 
-#### 1. Web Development Expert Agent
-**File:** `agents/web-dev-expert/config.json`
+#### 1. Web Development Expert Agent 🌐
+**GitHub:** `agents/web-dev-expert/config.json`
 
-**Capabilities:**
-- Landing page creation
-- Website development
-- UI/UX design implementation
-- React/Next.js/Astro development
-- Responsive design
-- Performance optimization
-- SEO implementation
-- Conversion optimization
-
-**Technologies:**
-- Frontend: React, Next.js, TypeScript, Tailwind CSS, Astro
-- Tools: Vite, Webpack, ESLint, Prettier
-- Deployment: Vercel, Netlify, GitHub Pages
-
-**How to Use:**
-This agent has been trained on our specific design system (Positivus) and can assist with:
-- Creating new service pages following our Positivus theme
-- Optimizing existing pages for performance
-- Implementing responsive designs
-- SEO and Schema markup
-
-#### 2. Code Management Orchestrator
-**File:** `agents/code-manager/orchestrator.md`
-
-**Responsibilities:**
-- Repository management (commits, branches, PRs)
-- Deployment automation (Vercel, Netlify, Pipedream)
-- Version control and conflict resolution
-- Code organization and documentation
-
-**Sub-Agents:**
-- **GitHub Operations** - Repository and commit management
-- **Deployment Agent** - Production deployments
-- **Version Control** - Semantic versioning and changelog
-- **Documentation Agent** - README and setup guides
-
-#### 3. Research & Optimization Experts
-- **Research Expert** - Market analysis and competitor insights
-- **Optimization Expert** - Performance improvements and A/B testing
-- **Master Orchestrator** - Strategic prioritization
-
-### Agent Workflow Example
+**Full Configuration:**
+```json
+{
+  "name": "Web Development Expert Agent",
+  "version": "1.0.0",
+  "description": "AI agent specialized in creating landing pages, websites, and web applications",
+  "capabilities": [
+    "Landing page creation",
+    "Website development",
+    "UI/UX design implementation",
+    "React/Next.js development",
+    "Responsive design",
+    "Performance optimization",
+    "SEO implementation",
+    "Conversion optimization"
+  ],
+  "technologies": {
+    "frontend": ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+    "tools": ["Vite", "Webpack", "ESLint", "Prettier"],
+    "deployment": ["Vercel", "Netlify", "GitHub Pages"]
+  },
+  "workflow_integration": {
+    "trigger": "New landing page request",
+    "output": "Deployed website URL",
+    "approval_required": true
+  }
+}
 ```
-1. Request: "Create a new service page for drain cleaning"
-   ↓
-2. Web Dev Expert Agent analyzes requirements
-   ↓
-3. Generates page following Positivus design system
-   ↓
-4. Code Manager pushes to GitHub
-   ↓
-5. Deployment Agent deploys to Vercel staging
-   ↓
-6. Optimization Expert runs performance audit
-   ↓
-7. Human approval → Production deployment
+
+**Specialized Prompts:**
+- `landing_page`: Expert web developer specializing in high-converting landing pages
+- `website_audit`: Web performance and UX expert analyzing websites for improvements
+- `code_generation`: Senior full-stack developer creating production-ready code
+
+**How to Use for Budd's Plumbing:**
+This agent has been specifically trained on the Positivus design system and can:
+- Generate new service pages matching the exact Positivus aesthetic
+- Optimize existing Astro components for performance
+- Implement responsive designs with Tailwind CSS
+- Add proper Schema.org markup for SEO
+- Ensure Lighthouse scores >= 90
+
+**Example Prompt:**
 ```
+"Create a new service page for 'Emergency Drain Cleaning' following the Positivus
+design system with lime green service cards, bold Space Grotesk headings, and
+Schema.org markup for a plumbing service."
+```
+
+#### 2. Code Management Orchestrator 🔧
+**GitHub:** `agents/code-manager/orchestrator.md`
+
+**Identity:** Code Management Orchestrator responsible for managing all code repositories, deployments, and version control.
+
+**Core Responsibilities:**
+1. **Repository Management** - Create, update, and organize GitHub repositories
+2. **Deployment Automation** - Deploy code to Vercel, Netlify, Pipedream
+3. **Version Control** - Manage commits, branches, and pull requests
+4. **Code Organization** - Maintain clean repository structures
+5. **Documentation** - Keep all code properly documented
+
+**Sub-Agent Coordination:**
+
+**a) GitHub Operations Agent**
+- Creates repositories
+- Manages commits and pushes
+- Handles pull requests
+- Sets up GitHub Actions
+
+**b) Deployment Agent**
+- Deploys to Pipedream
+- Deploys to Vercel/Netlify
+- Manages environment variables
+- Handles production releases
+
+**c) Version Control Agent**
+- Creates semantic versions
+- Manages branches
+- Handles merge conflicts
+- Maintains changelog
+
+**d) Documentation Agent**
+- Generates README files
+- Updates API documentation
+- Creates setup guides
+- Maintains agent documentation
+
+**Standard Workflow for Website Updates:**
+1. Pull latest code from GitHub
+2. Make requested changes
+3. Test locally if needed
+4. Commit with descriptive message
+5. Push to GitHub
+6. Deploy to production if requested
+
+**Activation Commands:**
+The code manager activates when you say:
+- "Deploy this to GitHub"
+- "Update the repository"
+- "Push these changes"
+- "Deploy to Vercel"
+- "I need to update my website"
+
+#### 3. Research & Optimization Experts 📊
+
+**Research Expert**
+- **Role:** Market analysis and opportunity identification
+- **Output:** Keyword opportunities, competition insights
+- **Use Case:** Identifying which service pages will drive most traffic
+
+**Optimization Expert**
+- **Role:** Performance improvement recommendations
+- **Output:** Speed optimizations, conversion rate improvements
+- **Use Case:** Ensuring Lighthouse scores stay >= 90
+
+**Master Orchestrator**
+- **Role:** Strategic prioritization and executive summary
+- **Output:** Top prioritized actions with risk assessment
+- **Use Case:** Deciding which Phase 2 tasks to tackle first
+
+### Multi-Agent Workflow Example
+
+**Scenario:** Creating a new location landing page for Ocean City, NJ
+
+```
+1. User Request: "Create Ocean City landing page"
+   ↓
+2. Research Expert analyzes local search data
+   → Returns: "Ocean City plumber", "emergency plumbing Ocean City" (high search volume)
+   ↓
+3. Web Dev Expert Agent receives research data
+   → Generates: Astro page with Positivus design, local Schema markup, optimized content
+   ↓
+4. Optimization Expert reviews generated code
+   → Checks: Image sizes, font loading, CSS optimization
+   → Returns: Performance recommendations
+   ↓
+5. Web Dev Expert implements optimizations
+   ↓
+6. Code Manager commits to GitHub
+   → Message: "Add Ocean City landing page with local SEO optimization"
+   ↓
+7. Deployment Agent deploys to Vercel staging
+   → Returns: Preview URL for review
+   ↓
+8. Optimization Expert runs Lighthouse audit
+   → Confirms: 93/95/92/100 scores (Performance/Accessibility/Best Practices/SEO)
+   ↓
+9. Human Approval → Production deployment
+   ↓
+10. Master Orchestrator logs completion and suggests next location page
+```
+
+### Repository Structure
+
+The agent architecture lives in a separate repository for reusability:
+
+```
+ai-marketing-agency/
+├── agents/                       # AI agent configurations
+│   ├── web-dev-expert/
+│   │   └── config.json          # Web dev agent config
+│   ├── code-manager/
+│   │   ├── orchestrator.md      # Main orchestrator
+│   │   ├── ACTIVATION_GUIDE.md  # How to activate
+│   │   └── sub-agents/
+│   │       ├── github-ops.md
+│   │       └── deployment.md
+│   ├── research-expert/
+│   ├── optimization-expert/
+│   ├── master-orchestrator/
+│   └── workflow-builder/
+├── workflows/                    # Pipedream automation workflows
+├── projects/                     # Client projects
+└── README.md
+```
+
+### How to Request Agent Assistance
+
+If you need help from our AI agents during development:
+
+1. **For New Pages:** Request Web Dev Expert
+   - "Generate [service] page following Positivus design"
+
+2. **For Deployment:** Request Code Manager
+   - "Deploy latest changes to Vercel"
+
+3. **For Performance:** Request Optimization Expert
+   - "Audit page performance and suggest improvements"
+
+4. **For Strategy:** Request Master Orchestrator
+   - "Prioritize remaining Phase 2 tasks by impact"
+
+### Safety Features
+
+- **Read-Only Analysis** - Agents never make changes without approval
+- **Human Approval Required** - All deployments need manager approval
+- **Risk Assessment** - Each recommendation labeled with risk level
+- **Audit Trail** - All decisions logged for transparency
 
 ---
 
