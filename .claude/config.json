@@ -1,0 +1,166 @@
+{
+  "projectContext": {
+    "name": "Budds Plumbing & HVAC Website",
+    "type": "Astro Static Site",
+    "client": "Budd's Plumbing, Heating & Cooling",
+    "location": "Cape May County, NJ",
+    "framework": "Astro 4.x",
+    "purpose": "Local service business website with SEO optimization and LLM readiness"
+  },
+
+  "essentialFiles": [
+    "PROJECT_STATUS.md - Current project status and session notes",
+    "project-config.json - Business information and configuration",
+    "README.md - Setup instructions and project overview",
+    ".claude/PROJECT_STATUS.md - Detailed session tracking",
+    "src/pages/[service].astro - Dynamic service page template",
+    "src/config/settings.js - Global site settings",
+    ".env.example - Required environment variables"
+  ],
+
+  "keyPrinciples": [
+    "Performance First - Target Lighthouse 90+ scores",
+    "LLM Optimized - Structured for AI search (Google AI Overview, ChatGPT, etc.)",
+    "Local SEO - Location-specific pages and schema markup",
+    "Conversion Focused - Clear CTAs, trust badges, financing offers",
+    "Mobile First - Responsive design with proper breakpoints",
+    "Real Photos - Use actual service photos, not AI-generated or stock illustrations"
+  ],
+
+  "designSystem": {
+    "theme": "Black/White Minimalist with Neon Blue CTAs",
+    "primaryColor": "#000000",
+    "accentColor": "#00E5FF",
+    "typography": "Space Grotesk (headings), Inter (body)",
+    "style": "Bold typography, generous whitespace, smooth animations"
+  },
+
+  "seoStrategy": {
+    "focus": "Local service business - Cape May County, Atlantic County, Cumberland County",
+    "primaryKeywords": [
+      "emergency plumber [location]",
+      "plumber Cape May County",
+      "24/7 plumbing [location]",
+      "furnace repair [location]",
+      "water heater installation [location]"
+    ],
+    "schemaMarkup": [
+      "LocalBusiness",
+      "Service",
+      "FAQ",
+      "Breadcrumb"
+    ]
+  },
+
+  "llmOptimization": {
+    "enabled": true,
+    "targetPlatforms": ["Google AI Overview", "ChatGPT", "Claude", "Perplexity"],
+    "tactics": [
+      "Structured Q&A format in FAQ sections",
+      "Complete answers with specific details",
+      "Proper HTML hierarchy (H1 > H2 > H3)",
+      "Schema.org markup for rich results",
+      "Authority signals (license numbers, certifications)"
+    ],
+    "requirements": {
+      "faqMinimum": 5,
+      "pricingTransparency": true,
+      "responseTimesSpecific": true
+    }
+  },
+
+  "businessContext": {
+    "phone": "(609) 465-3759",
+    "email": "info@buddsplumbing.com",
+    "address": "1011 Route 9 S, Cape May Court House, NJ 08210",
+    "license": "Master Plumber #13160",
+    "established": "1989",
+    "serviceArea": ["Cape May County", "Atlantic County", "Cumberland County"],
+    "certifications": [
+      "South Jersey Gas Participating Contractor",
+      "Atlantic City Electric NEIF Program Partner"
+    ],
+    "financing": {
+      "sjgSaveGreen": "0% for 7 years on gas equipment ($10,000+)",
+      "acElectricNeif": "0% for 7 years on HVAC ($5,000+)"
+    }
+  },
+
+  "agentReferences": {
+    "note": "Agents are stored in ~/ai-digital-agency/agents/, NOT in this repo",
+    "availableAgents": [
+      "web-dev-expert - Main development orchestrator",
+      "seo-keyword-specialist - Local SEO with geo-targeting",
+      "ui-design-specialist - Design feedback and Positivus design system",
+      "llm-optimizer - AI search optimization",
+      "schema-specialist - Structured data markup",
+      "conversion-specialist - CTA and conversion optimization",
+      "qa-specialist - Quality assurance",
+      "asset-auditor - Image and asset optimization"
+    ],
+    "agentPath": "~/ai-digital-agency/agents/web-dev-expert/"
+  },
+
+  "currentPhase": {
+    "phase": "Phase 1 - Core Service Pages",
+    "completed": [
+      "15 service pages created",
+      "Homepage fully optimized",
+      "Financing CTAs implemented",
+      "Design system established",
+      "Schema markup added",
+      "SJG contractor badge integrated"
+    ],
+    "nextSteps": [
+      "Create AC/HVAC service pages",
+      "Add location-specific landing pages",
+      "Deploy to production",
+      "Configure Sanity CMS",
+      "Set up analytics and call tracking"
+    ]
+  },
+
+  "technicalStack": {
+    "framework": "Astro 4.x",
+    "styling": "CSS (theme.css, global.css)",
+    "icons": "astro-icon with Material Design Icons",
+    "cms": "Sanity (planned)",
+    "database": "Supabase (for forms)",
+    "hosting": "Vercel (recommended) or Netlify",
+    "analytics": "GA4, Google Ads",
+    "callTracking": "CallRail"
+  },
+
+  "workingWithClaude": {
+    "startHere": "Always read PROJECT_STATUS.md first to understand current state",
+    "sessionTracking": "Update .claude/PROJECT_STATUS.md after each session",
+    "fileReferences": "Use project-config.json for business context",
+    "agentAccess": "Reference agents from ~/ai-digital-agency/agents/",
+    "documentation": "Keep README.md and PROJECT_STATUS.md in sync"
+  },
+
+  "commonTasks": {
+    "createServicePage": "Use existing service page markdown as template, ensure FAQ schema",
+    "addComponent": "Follow Astro component patterns in src/components/",
+    "updateStyles": "Modify src/styles/theme.css for theme changes",
+    "addSchema": "Use components in src/components/schema/",
+    "optimizeForLLM": "Add structured FAQs with complete answers"
+  },
+
+  "avoidances": [
+    "Do NOT use AI-generated or stock illustrations - use real service photos",
+    "Do NOT label content as 'for LLMs' - write naturally but structure properly",
+    "Do NOT change brand colors without approval - black/white/neon blue theme is set",
+    "Do NOT skip schema markup on service pages",
+    "Do NOT create pages without proper meta tags and Open Graph"
+  ],
+
+  "reminders": [
+    "Check PROJECT_STATUS.md for latest session notes",
+    "Test builds locally before committing (npm run build)",
+    "Validate environment variables are set (.env file)",
+    "Ensure all service pages have minimum 5 FAQs",
+    "Use clamp() for responsive typography",
+    "Include trust badges (SJG, licensing) where relevant"
+  ]
+}
